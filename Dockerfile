@@ -2,6 +2,7 @@ FROM selenium/standalone-chrome-debug:3.13.0
 
 # PARAMETERS
 ENV CYTOSCAPE_VERSION 3.7.0
+ENV DISPLAY=192.168.99.1:0
 
 # CHANGE USER
 USER root
@@ -34,9 +35,21 @@ RUN rm cytoscape-$CYTOSCAPE_VERSION.tar.gz
 RUN echo "/home/seluser/cytoscape/cytoscape-unix-$CYTOSCAPE_VERSION/cytoscape.sh --rest 1234" > /home/seluser/cytoscape/start.sh
 RUN chmod 777 /home/seluser/cytoscape/start.sh
 
+# install Anaconda
+WORKDIR /home/seluser
+RUN wget https://repo.anaconda.com/archive/Anaconda3-2020.02-Linux-x86_64.sh
+RUN bash /home/seluser/Anaconda3-2020.02-Linux-x86_64.sh -b -p \
+    && eval "$(/home/seluser/anaconda3/bin/conda shell.bash hook)" 
+
+
+
 # INSTALL NOVNC
 WORKDIR /home/seluser
 RUN git clone https://github.com/novnc/noVNC.git
+
+# install TPS 
+WORKDIR /home/seluser
+RUN git clone -b visualization_v2_PR2 https://github.com/ajshedivy/tps.git 
 
 # CONFIGURE supervisord
 COPY supervisor/*.conf /etc/supervisor/conf.d/
