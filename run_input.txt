@@ -1,0 +1,22 @@
+docker rm -f cy; docker run --name cy \
+  -v /$(pwd)://home/seluser/cytoscape/output \
+  -p 5900:5900 -p 1234:1234 -p 8080:8080 -p 6080:6080 \
+  -e no_proxy=localhost \
+  -e HUB_ENV_no_proxy=localhost \
+  -e SCREEN_WIDTH=1270 -e SCREEN_HEIGHT=700 \
+  -e VNC_NO_PASSWORD=1 \
+  cytoscape/test_tps \
+  sh -c '/opt/bin/entry_point.sh & /home/seluser/noVNC/utils/launch.sh --vnc localhost:5900' &\
+  (sleep 3; docker exec -it cy sh -c '/home/seluser/cytoscape/start.sh') &
+
+--------------------------------------------------------------------------------------------------------
+
+docker rm -f cy; docker run --name cy   -v /$(pwd)://home/seluser/cytoscape/output -e DISPLAY=192.168.99.1:0 -p 5900:5900 -p 1234:1234 -p 8080:8080 -p 6080:6080 \
+  -e no_proxy=localhost \
+  -e HUB_ENV_no_proxy=localhost \
+  -e SCREEN_WIDTH=1270 -e SCREEN_HEIGHT=700 \
+  -e VNC_NO_PASSWORD=1 \
+482924d19760  sh -c '/opt/bin/entry_point.sh & /home/seluser/noVNC/utils/launch.sh --vnc localhost:5900' &  (sleep 3; docker exec -it cy sh -c '/home/seluser/cytoscape/start.sh') &
+
+-------------------------------------------------------------------------------------------------------------
+$ docker run -it -v /$(pwd):/home/seluser/tps/results cytoscape/test_tps bash
