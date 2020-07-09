@@ -16,7 +16,7 @@ docker rm -f cy; docker run --name cy   -v /$(pwd)://home/seluser/cytoscape/outp
   -e HUB_ENV_no_proxy=localhost \
   -e SCREEN_WIDTH=1270 -e SCREEN_HEIGHT=700 \
   -e VNC_NO_PASSWORD=1 \
-482924d19760  sh -c '/opt/bin/entry_point.sh & /home/seluser/noVNC/utils/launch.sh --vnc localhost:5900' &  (sleep 3; docker exec -it cy sh -c '/home/seluser/cytoscape/start.sh') &
+cytoscape/cyto-desktop-v2 sh -c '/opt/bin/entry_point.sh & /home/seluser/noVNC/utils/launch.sh --vnc localhost:5900' &  (sleep 3; docker exec -it cy sh -c '/home/seluser/cytoscape/start.sh') &
 
 -------------------------------------------------------------------------------------------------------------
 $ docker run -it -v /$(pwd):/home/seluser/tps/results cytoscape/test_tps bash

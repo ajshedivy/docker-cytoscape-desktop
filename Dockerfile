@@ -16,7 +16,7 @@ RUN apt-get -y install default-jdk
 RUN echo '/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java' >> /etc/environment
 
 # INSTALL ADDITIONAL TOOLS
-RUN apt-get install -y nano links git wget curl htop
+RUN apt-get install -y vim links git wget curl htop
 
 # INSTALL SUPERVISOR
 RUN apt-get install -y supervisor
@@ -37,8 +37,8 @@ RUN chmod 777 /home/seluser/cytoscape/start.sh
 
 # install Anaconda
 WORKDIR /home/seluser
-RUN wget https://repo.anaconda.com/archive/Anaconda3-2020.02-Linux-x86_64.sh
-RUN bash /home/seluser/Anaconda3-2020.02-Linux-x86_64.sh -b -p \
+RUN wget https://repo.anaconda.com/miniconda/Miniconda2-latest-Linux-x86_64.sh
+RUN bash /home/seluser/Miniconda2-latest-Linux-x86_64.sh -b -p \
     && eval "$(/home/seluser/anaconda3/bin/conda shell.bash hook)" 
 
 
